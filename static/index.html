@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deteksi Kematangan Alpukat</title>
+</head>
+<body>
+  <h2>Upload Gambar Alpukat</h2>
+  <input type="file" id="image" />
+  <button onclick="sendImage()">Prediksi</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function sendImage() {
+      const fileInput = document.getElementById("image");
+      const formData = new FormData();
+      formData.append("image", fileInput.files[0]);
+
+      const response = await fetch("/predict", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+      document.getElementById("result").textContent = JSON.stringify(result, null, 2);
+    }
+  </script>
+</body>
+</html>
